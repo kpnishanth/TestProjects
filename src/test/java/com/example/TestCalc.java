@@ -11,7 +11,7 @@ public class TestCalc {
     public void testAdd() {
         int result = calculator.add(2, 3);
         System.out.println("Addition result: " + result);
-        assert result == 8 : "Addition test failed";
+        assert result == 5 : "Addition test failed";
     }
 
     @Test
@@ -26,6 +26,6 @@ public class TestCalc {
     public void testMultiply() {
         int result = calculator.multiply(4, 3);
         System.out.println("Multiplication result: " + result);
-        assert result == 15 : "Multiplication test failed";
+        assert result == 12 : "Multiplication test failed";
     }
 }
