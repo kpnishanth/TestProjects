@@ -8,7 +8,7 @@ pipeline {
   parameters {
     choice(
       name: 'EXECUTION_TYPE',
-      choices: ['REGRESSION', 'SMOKE'],
+      choices: ['Regression', 'Smoke'],
       description: 'Select the type of execution'
     )
   }
