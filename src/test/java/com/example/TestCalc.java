@@ -22,7 +22,7 @@ public class TestCalc {
         assert result == 2 : "Subtraction test failed";
     }
 
-    @Test
+    @Test(tags = "division")
     public void testMultiply() {
         int result = calculator.multiply(4, 3);
         System.out.println("Multiplication result: " + result);

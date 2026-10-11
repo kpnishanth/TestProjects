@@ -5,6 +5,14 @@ pipeline {
         maven 'Maven3'
     }
 
+    parameters {
+        choice(
+            name: 'EXECUTION_TYPE',
+            choices: ['REGRESSION', 'SMOKE'],
+            description: 'Select the type of execution'
+        )
+    }
+
     stages {
         stage('Build') {
             steps {
@@ -12,10 +20,24 @@ pipeline {
             }
         }
 
-        stage('Test') {
+        stage('Regression Test') {
+            when {
+                expression { params.EXECUTION_TYPE == 'REGRESSION' }
+            }
             steps {
                 catchError(buildResult: 'UNSTABLE', stageResult: 'UNSTABLE') {
-                    sh 'mvn test'
+                    sh 'mvn -Dsurefire.suitexmlfiles=**/RegressionTest.xml test'
+                }
+            }
+        }
+
+        stage('Smoke Test') {
+            when {
+                expression { params.EXECUTION_TYPE == 'SMOKE' }
+            }
+            steps {
+                catchError(buildResult: 'UNSTABLE', stageResult: 'UNSTABLE') {
+                    sh 'mvn -Dsurefire.suitexmlfiles=**/SmokeTest.xml test'
                 }
             }
         }
