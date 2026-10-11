@@ -12,8 +12,8 @@ public class TestCalc {
         System.out.println("Smoke test started");
         int result = calculator.add(2, 3);
         System.out.println("Addition result: " + result);
-        System.out.println("My Username is: " + System.getProperty("USERNAME"));
-        System.out.println("My Password is: " + System.getProperty("PASSWORD"));
+        System.out.println("My Username is: " + System.getenv("USERNAME"));
+        System.out.println("My Password is: " + System.getenv("PASSWORD"));
         assert result == 5 : "Addition test failed";
     }
 
