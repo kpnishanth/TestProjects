@@ -20,27 +20,15 @@ pipeline {
             }
         }
 
-        stage('Regression_Test') {
-            when {
-                expression { params.EXECUTION_TYPE == 'REGRESSION' }
-            }
+        stage('Test') {
+    
             steps {
                 catchError(buildResult: 'UNSTABLE', stageResult: 'UNSTABLE') {
-                    sh 'mvn -Dgroups=Regression test'
+                    sh 'mvn -Dgroups=${params.EXECUTION_TYPE} test'
                 }
             }
         }
-
-        stage('Smoke Test') {
-            when {
-                expression { params.EXECUTION_TYPE == 'SMOKE' }
-            }
-            steps {
-                catchError(buildResult: 'UNSTABLE', stageResult: 'UNSTABLE') {
-                    sh 'mvn -Dgroups=Smoke test'
-                }
-            }
-        }
+       
     }
 
     post {
