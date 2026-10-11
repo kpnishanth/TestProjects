@@ -26,7 +26,7 @@ pipeline {
             }
             steps {
                 catchError(buildResult: 'UNSTABLE', stageResult: 'UNSTABLE') {
-                    sh 'mvn -Dgroups=Regression'
+                    sh 'mvn -Dgroups=Regression test'
                 }
             }
         }
@@ -37,7 +37,7 @@ pipeline {
             }
             steps {
                 catchError(buildResult: 'UNSTABLE', stageResult: 'UNSTABLE') {
-                    sh 'mvn -Dgroups=Smoke'
+                    sh 'mvn -Dgroups=Smoke test'
                 }
             }
         }
