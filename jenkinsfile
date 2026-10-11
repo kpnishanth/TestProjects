@@ -20,11 +20,10 @@ pipeline {
             }
         }
 
-        stage('Test') {
-    
+        stage('Test') {    
             steps {
                 catchError(buildResult: 'UNSTABLE', stageResult: 'UNSTABLE') {
-                    sh 'mvn -Dgroups=${params.EXECUTION_TYPE} test'
+                    sh 'mvn -Dgroups="$params.EXECUTION_TYPE" test'
                 }
             }
         }
