@@ -1,38 +1,38 @@
 pipeline {
-    agent any
+  agent any
 
-    tools {
-        maven 'Maven3'
+  tools {
+    maven 'Maven3'
+  }
+
+  parameters {
+    choice(
+      name: 'EXECUTION_TYPE',
+      choices: ['REGRESSION', 'SMOKE'],
+      description: 'Select the type of execution'
+    )
+  }
+
+  stages {
+    stage('Build') {
+      steps {
+        sh 'mvn clean compile'
+      }
     }
 
-    parameters {
-        choice(
-            name: 'EXECUTION_TYPE',
-            choices: ['REGRESSION', 'SMOKE'],
-            description: 'Select the type of execution'
-        )
-    }
-
-    stages {
-        stage('Build') {
-            steps {
-                sh 'mvn clean compile'
-            }
+    stage('Test') {
+      steps {
+        catchError(buildResult: 'UNSTABLE', stageResult: 'UNSTABLE') {
+          sh 'mvn -Dgroups="$params.EXECUTION_TYPE" test'
         }
-
-        stage('Test') {    
-            steps {
-                catchError(buildResult: 'UNSTABLE', stageResult: 'UNSTABLE') {
-                    sh 'mvn -Dgroups="$params.EXECUTION_TYPE" test'
-                }
-            }
-        }
-       
+      }
     }
 
-    post {
-        always {
-            junit '**/target/surefire-reports/*.xml'
-        }
+  }
+
+  post {
+    always {
+      junit '**/target/surefire-reports/*.xml'
     }
+  }
 }
