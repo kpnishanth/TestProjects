@@ -16,21 +16,18 @@ pipeline {
   stages {
     stage('Build') {
       steps {
-        sh 'mvn clean compile'
+        sh 'mvn -B clean compile'
       }
     }
 
     stage('Test') {
       steps {
-        withCredentials([usernamePassword(credentialsId: 'github_username', passwordVariable: 'PASSWORD', usernameVariable: 'USERNAME')]) 
-        
-        {
-          sh "mvn -Dgroups=${params.EXECUTION_TYPE} test"
-         sh '''
-          echo System.getProperty("user.name")
-          echo System.getProperty("user.home")
-          '''
+        withCredentials([usernamePassword(credentialsId: 'github_username', usernameVariable: 'USERNAME', passwordVariable: 'PASSWORD')]) {
+          sh "echo 'Using credentials: $USERNAME / $PASSWORD'"
+          sh "mvn -B -Dgroups=${params.EXECUTION_TYPE} test"
         }
+       
+       
       }
     }
 
