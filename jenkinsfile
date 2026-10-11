@@ -20,13 +20,13 @@ pipeline {
             }
         }
 
-        stage('Regression Test') {
+        stage('Regression_Test') {
             when {
                 expression { params.EXECUTION_TYPE == 'REGRESSION' }
             }
             steps {
                 catchError(buildResult: 'UNSTABLE', stageResult: 'UNSTABLE') {
-                    sh 'mvn -Dsurefire.suitexmlfiles=**/RegressionTest.xml test'
+                    sh 'mvn -v -Dgroups=Regression'
                 }
             }
         }
@@ -37,7 +37,7 @@ pipeline {
             }
             steps {
                 catchError(buildResult: 'UNSTABLE', stageResult: 'UNSTABLE') {
-                    sh 'mvn -Dsurefire.suitexmlfiles=**/SmokeTest.xml test'
+                    sh 'mvn -v -Dgroups=Smoke'
                 }
             }
         }
