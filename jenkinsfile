@@ -22,7 +22,7 @@ pipeline {
 
     stage('Test') {
       steps {
-        withCredentials([usernamePassword(credentialsId: 'github_username', usernameVariable: 'USERNAME', passwordVariable: 'PASSWORD')]) {
+        withCredentials([usernamePassword(credentialsId: 'mylogin', usernameVariable: 'USERNAME', passwordVariable: 'PASSWORD')]) {
           sh "echo 'Using credentials: $USERNAME / $PASSWORD'"
           sh "mvn -B -Dgroups=${params.EXECUTION_TYPE} test"
         }
