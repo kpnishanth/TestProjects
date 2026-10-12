@@ -28,12 +28,9 @@ pipeline {
         withCredentials([usernamePassword(credentialsId: 'mylogin', usernameVariable: 'USERNAME', passwordVariable: 'PASSWORD')]) {
           sh "echo 'Using credentials: $USERNAME / $PASSWORD'"
           sh "mvn -B -Dgroups=${params.EXECUTION_TYPE} test"
-        }
-
-        sh 'mvn test'
+        }         
        
-       
-      }
+            }
     }
 
   }
